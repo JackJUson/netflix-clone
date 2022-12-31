@@ -5,6 +5,22 @@ import { useEffect, useState } from "react";
 function Header() {
   const [pageScroll, setPageScroll] = useState(false);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setPageScroll(true);
+      } else {
+        setPageScroll(false);
+      }
+    }
+  
+    window.addEventListener('scroll', handleScroll);
+  
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    }
+  }, []);
+
   return (
     <header>
       <div className="flex items-center space-x-2 md:space-x-10">
