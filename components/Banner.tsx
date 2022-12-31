@@ -1,6 +1,11 @@
 import Image from "next/image"
+import { Movie } from "../typings"
 
-function Banner() {
+interface Props {
+  netflixOriginals: Movie[];
+}
+
+function Banner({ netflixOriginals }: Props) {
   return (
     <div>
       {/* <div>
