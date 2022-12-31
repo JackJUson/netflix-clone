@@ -1,25 +1,42 @@
-import Head from 'next/head'
-import Banner from '../components/Banner'
-import Header from '../components/Header'
-import { Movie } from '../typings'
-import requests from '../utils/request'
+import Head from "next/head";
+import Banner from "../components/Banner";
+import Header from "../components/Header";
+import { Movie } from "../typings";
+import requests from "../utils/request";
 
 interface Props {
-  netflixOriginals: Movie[]
+  netflixOriginals: Movie[];
+  trendingNow: Movie[];
+  topRated: Movie[];
+  actionMovies: Movie[];
+  comedyMovies: Movie[];
+  horrorMovies: Movie[];
+  romanceMovies: Movie[];
+  documentaries: Movie[];
 }
 
-const Home = ({ netflixOriginals }: Props) => {
-  console.log(netflixOriginals);
+const Home = ({
+  netflixOriginals,
+  trendingNow,
+  topRated,
+  actionMovies,
+  comedyMovies,
+  horrorMovies,
+  romanceMovies,
+  documentaries,
+}: Props) => {
   return (
-    <div className="relative h-screen bg-gradient-to-b from-gray-900/10
-    to-[#010511] lg:h-[140vh]">
+    <div
+      className="relative h-screen bg-gradient-to-b from-gray-900/10
+    to-[#010511] lg:h-[140vh]"
+    >
       <Head>
         <title>Home - Netflix</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main>    
-        <Banner />
+      <main>
+        <Banner netflixOriginals={netflixOriginals}/>
         <section>
           {/* Row */}
           {/* Row */}
@@ -31,12 +48,12 @@ const Home = ({ netflixOriginals }: Props) => {
       </main>
       {/* Modal */}
     </div>
-  )
-}
+  );
+};
 
 export default Home;
 
-export const getServerSideProps = async() => {
+export const getServerSideProps = async () => {
   // Single await for page performance
   const [
     netflixOriginals,
@@ -56,7 +73,7 @@ export const getServerSideProps = async() => {
     fetch(requests.fetchHorrorMovies).then((res) => res.json()),
     fetch(requests.fetchRomanceMovies).then((res) => res.json()),
     fetch(requests.fetchDocumentaries).then((res) => res.json()),
-  ])
+  ]);
 
   return {
     props: {
@@ -69,5 +86,5 @@ export const getServerSideProps = async() => {
       romanceMovies: romanceMovies.results,
       documentaries: documentaries.results,
     },
-  }
-}
+  };
+};
