@@ -53,4 +53,16 @@ export const getServerSideProps = async() => {
     fetch(requests.fetchDocumentaries).then((res) => res.json()),
   ])
 
+  return {
+    props: {
+      netflixOriginals: netflixOriginals,
+      trendingNow: trendingNow,
+      topRated: topRated,
+      actionMovies: actionMovies,
+      comedyMovies: comedyMovies,
+      horrorMovies: horrorMovies,
+      romanceMovies: romanceMovies,
+      documentaries: documentaries,
+    },
+  }
 }
