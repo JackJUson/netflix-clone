@@ -1,7 +1,10 @@
 import { BellIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 function Header() {
+  const [pageScroll, setPageScroll] = useState(false);
+
   return (
     <header>
       <div className="flex items-center space-x-2 md:space-x-10">
