@@ -35,6 +35,15 @@ function useAuth() {
       }).catch((error) => alert(error.message)).finally(() => setLoading(false));
     }
 
-  return 
+    const logout = async () => {
+      setLoading(true);
+
+      signOut(auth).then(() => {
+        setUser(null)
+      }).catch((error) => alert(error.message)).finally(() => setLoading(false));
+    }
+
+  return
+  
 }
 export default useAuth;
