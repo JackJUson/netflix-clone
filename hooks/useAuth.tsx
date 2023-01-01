@@ -35,7 +35,25 @@ interface Props {
 export const AuthProvider = ({ children }: Props) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState(null);
+  const [initialLoading, setInitialLoading] = useState(true);
   const router = useRouter();
+
+  useEffect(
+    () =>
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setUser(user);
+          setLoading(false);
+        } else {
+          setUser(null);
+          setLoading(true);
+          router.push("/login");
+        }
+        setInitialLoading(false);
+      }),
+    [auth]
+  );
 
   const signUp = async (email: string, password: string) => {
     setLoading(true);
@@ -74,11 +92,23 @@ export const AuthProvider = ({ children }: Props) => {
       .finally(() => setLoading(false));
   };
 
-  const memo = useMemo(() => ({
-    user, signUp, signIn, loading, logout 
-  }), [user, loading])
+  const memo = useMemo(
+    () => ({
+      user,
+      signUp,
+      signIn,
+      loading,
+      logout,
+      error,
+    }),
+    [user, loading]
+  );
 
-  return <AuthContext.Provider value={memo}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={memo}>
+      {!initialLoading && children}
+    </AuthContext.Provider>
+  );
 };
 
 export default function useAuth() {
