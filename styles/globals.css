@@ -18,7 +18,7 @@
 /* custom classNames */
 @layer components {
   .headerLink {
-    @apply cursor-pointer text-sm font-light text-[#e5e5e5] transition 
+    @apply cursor-pointer font-light text-[#e5e5e5] transition 
     duration-[.4s] hover:text-[#b3b3b3];
   }
 
