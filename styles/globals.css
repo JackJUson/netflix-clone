@@ -26,4 +26,9 @@
     @apply flex items-center gap-x-2 rounded px-3 py-1.5 text-sm font-semibold transition
     hover:opacity-75 md:py-2 md:px-4 lg:py-2.5 lg:px-6 lg:text-xl;
   }
+
+  .input {
+    @apply w-full rounded bg-[#333] px-5 py-3.5 placeholder-[grey] outline-none
+    focus:bg-[#454545]
+  }
 }
