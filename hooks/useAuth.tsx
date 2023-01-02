@@ -40,12 +40,12 @@ export const AuthProvider = ({ children }: Props) => {
   const router = useRouter();
 
   useEffect(
-    () =>
+    () =>               // Persisting the user
       onAuthStateChanged(auth, (user) => {
-        if (user) {
+        if (user) {     // Already logged in
           setUser(user);
           setLoading(false);
-        } else {
+        } else {        // Not logged in
           setUser(null);
           setLoading(true);
           router.push("/login");
