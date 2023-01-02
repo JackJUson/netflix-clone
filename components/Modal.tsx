@@ -4,12 +4,14 @@ import { useRecoilState } from "recoil";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { Element, Genre } from "../typings";
+import ReactPlayer from "react-player/lazy";
 
 function Modal() {
   const [showModal, setShowModal] = useRecoilState(modalState);
   const [movie, setMovie] = useRecoilState(movieState);
   const [trailer, setTrailer] = useState("");
   const [genres, setGenres] = useState<Genre[]>([]);
+  const [muted, setMuted] = useState(false);
 
   const handleClose = () => {
     setShowModal(false);
@@ -31,17 +33,15 @@ function Modal() {
         const index = data.videos.results.findIndex(
           (element: Element) => element.type === "Trailer"
         );
-        setTrailer(data.videos?.results[index]?.key)
+        setTrailer(data.videos?.results[index]?.key);
       }
       if (data?.genres) {
-        setGenres(data.genres)
+        setGenres(data.genres);
       }
     }
 
     fetchMovie();
   }, [movie]);
-
-  console.log(trailer);
 
   return (
     <MuiModal open={showModal} onClose={handleClose}>
@@ -54,7 +54,16 @@ function Modal() {
           <XMarkIcon className="h-7 w-7" />
         </button>
 
-        <div></div>
+        <div>
+          <ReactPlayer
+            url={`https://www.youtube.com/watch?v=${trailer}`}
+            width="100%"
+            height="100%"
+            style={{ position: "absolute", top: "0", left: "0" }}
+            playing
+            muted={muted}
+          />
+        </div>
       </>
     </MuiModal>
   );
