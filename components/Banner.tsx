@@ -22,8 +22,6 @@ function Banner({ netflixOriginals }: Props) {
     );
   }, [netflixOriginals]);
 
-  console.log(movie);
-
   return (
     <div
       className="flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] 

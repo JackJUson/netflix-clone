@@ -21,3 +21,13 @@ export interface Movie {
   vote_average: number
   vote_count: number
 }
+
+export interface Element {
+  type:
+    | 'Bloopers'
+    | 'Featurette'
+    | 'Behind the Scenes'
+    | 'Clip'
+    | 'Trailer'
+    | 'Teaser'
+}

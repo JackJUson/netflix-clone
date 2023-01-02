@@ -16,6 +16,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.41.3",
     "react-icons": "^4.7.1",
+    "react-player": "^2.11.0",
     "recoil": "^0.7.6",
     "tailwind-scrollbar-hide": "^1.1.7"
   },
