@@ -1,10 +1,15 @@
 import MuiModal from "@mui/material/Modal";
 import { modalState, movieState } from "../atoms/modalAtom";
 import { useRecoilState } from "recoil";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import {
+  HandThumbUpIcon,
+  PlusIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { Element, Genre } from "../typings";
 import ReactPlayer from "react-player/lazy";
+import { FaPlay, FaVolumeOff, FaVolumeUp } from "react-icons/fa";
 
 function Modal() {
   const [showModal, setShowModal] = useRecoilState(modalState);
@@ -44,7 +49,12 @@ function Modal() {
   }, [movie]);
 
   return (
-    <MuiModal open={showModal} onClose={handleClose}>
+    <MuiModal
+      className="fixed !top-7 left-0 right-0 z-50 mx-auto w-full max-w-5xl overflow-hidden
+      overflow-y-scroll rounded-md scrollbar-hide"
+      open={showModal}
+      onClose={handleClose}
+    >
       <>
         <button
           onClick={handleClose}
@@ -54,7 +64,7 @@ function Modal() {
           <XMarkIcon className="h-7 w-7" />
         </button>
 
-        <div>
+        <div className="relative pt-[56.25%]">
           <ReactPlayer
             url={`https://www.youtube.com/watch?v=${trailer}`}
             width="100%"
@@ -63,6 +73,36 @@ function Modal() {
             playing
             muted={muted}
           />
+
+          <div
+            className="absolute bottom-10 flex w-full items-center 
+          justify-between px-10"
+          >
+            <div className="flex space-x-2">
+              <button
+                className="flex items-center gap-x-2 rounded bg-white
+              px-8 text-xl font-bold text-black transition hover:bg-[#e6e6e6]"
+              >
+                <FaPlay className="h-7 w-7 text-black" />
+                Play
+              </button>
+
+              <button className="modalButton">
+                <PlusIcon className="h-7 w-7" />
+              </button>
+
+              <button className="modalButton">
+                <HandThumbUpIcon className="h-7 w-7" />
+              </button>
+            </div>
+            <button className="modalButton" onClick={() => setMuted(!muted)}>
+              {muted ? (
+                <FaVolumeOff className="h-6 w-6" />
+              ) : (
+                <FaVolumeUp className="h-6 w-6" />
+              )}
+            </button>
+          </div>
         </div>
       </>
     </MuiModal>
