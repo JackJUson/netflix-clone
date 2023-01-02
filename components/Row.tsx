@@ -26,24 +26,6 @@ function Row({ title, movies }: Props) {
     }
   };
 
-  function shuffle(movies: Movie[]) {
-    let currentIndex = movies.length,  randomIndex;
-  
-    // While there remain elements to shuffle.
-    while (currentIndex != 0) {
-  
-      // Pick a remaining element.
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-  
-      // And swap it with the current element.
-      [movies[currentIndex], movies[randomIndex]] = [
-        movies[randomIndex], movies[currentIndex]];
-    }
-  
-    return movies;
-  }
-
   return (
     <div className="space-y-0.5 sm:space-y-2 sm:h-40 lg:h-60">
       <h2
@@ -64,7 +46,7 @@ function Row({ title, movies }: Props) {
           ref={rowRef}
           className="flex items-center space-x-1 sm:space-x-3 overflow-x-scroll scrollbar-hide md:space-x-2.5 md:p-2"
         >
-          {shuffle(movies).map((movie) => (
+          {movies.map((movie) => (
             <Thumbnail movie={movie} key={movie.id} />
           ))}
         </div>
@@ -79,4 +61,5 @@ function Row({ title, movies }: Props) {
     </div>
   );
 }
+
 export default Row;

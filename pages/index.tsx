@@ -2,6 +2,7 @@ import Head from "next/head";
 import Banner from "../components/Banner";
 import Header from "../components/Header";
 import Row from "../components/Row";
+import useAuth from "../hooks/useAuth";
 import { Movie } from "../typings";
 import requests from "../utils/request";
 
@@ -26,6 +27,10 @@ const Home = ({
   romanceMovies,
   documentaries,
 }: Props) => {
+  const { loading, logout } = useAuth();
+
+  if (loading) return null;
+
   return (
     <div
       className="relative h-screen bg-gradient-to-b lg:h-[140vh]"
@@ -38,13 +43,13 @@ const Home = ({
       <main className="relative pl-4 pb-24 lg:space-y-24 lg:pl-16">
         <Banner netflixOriginals={netflixOriginals}/>
         <section className="md:space-y-24">
-          <Row title="Trending Now" movies={trendingNow}/>
-          <Row title="Top Rate" movies={topRated}/>
-          <Row title="Action" movies={actionMovies}/>
-          <Row title="Comedies" movies={comedyMovies}/>
-          <Row title="Horror" movies={horrorMovies}/>
-          <Row title="Romance" movies={romanceMovies}/>
-          <Row title="Documentaries" movies={documentaries}/>
+          <Row title="Trending Now" movies={shuffle(trendingNow)}/>
+          <Row title="Top Rate" movies={shuffle(topRated)}/>
+          <Row title="Action" movies={shuffle(actionMovies)}/>
+          <Row title="Comedies" movies={shuffle(comedyMovies)}/>
+          <Row title="Horror" movies={shuffle(horrorMovies)}/>
+          <Row title="Romance" movies={shuffle(romanceMovies)}/>
+          <Row title="Documentaries" movies={shuffle(documentaries)}/>
         </section>
       </main>
       {/* Modal */}
@@ -89,3 +94,21 @@ export const getServerSideProps = async () => {
     },
   };
 };
+
+function shuffle(movies: Movie[]) {
+  let currentIndex = movies.length,  randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [movies[currentIndex], movies[randomIndex]] = [
+      movies[randomIndex], movies[currentIndex]];
+  }
+
+  return movies;
+}
