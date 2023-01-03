@@ -31,7 +31,7 @@ function Plan() {
         </button>
       </header>
 
-      <main className="pt-28">
+      <main className="pt-28 max-w-5xl">
         <h1 className="mb-3 text-3xl font-medium">
           Choose the plan that's right for you
         </h1>
@@ -49,6 +49,14 @@ function Plan() {
             your plan anytime.
           </li>
         </ul>
+
+        <div className="mt-4 flex flex-col space-y-4">
+          <div className="flex w-full items-center justify-center self-end md:w-3/5">
+            <div className="planOption">Standard</div>
+            <div className="planOption">Standard</div>
+            <div className="planOption">Standard</div>
+          </div>
+        </div>
       </main>
     </div>
   );
