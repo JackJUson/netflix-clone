@@ -4,6 +4,7 @@ import { modalState } from "../atoms/modalAtom";
 import Banner from "../components/Banner";
 import Header from "../components/Header";
 import Modal from "../components/Modal";
+import Plan from "../components/Plan";
 import Row from "../components/Row";
 import useAuth from "../hooks/useAuth";
 import { Movie } from "../typings";
@@ -32,8 +33,11 @@ const Home = ({
 }: Props) => {
   const { loading, logout } = useAuth();
   const showModal = useRecoilValue(modalState);
+  const subscription = false;
 
-  if (loading) return null;
+  if (loading || subscription === null) return null;
+
+  if (!subscription) return <Plan />
 
   return (
     <div
