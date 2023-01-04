@@ -1,9 +1,15 @@
 import { CheckIcon } from "@heroicons/react/24/solid";
+import { Product } from "@stripe/firestore-stripe-payments";
 import Head from "next/head";
 import Link from "next/link";
 import useAuth from "../hooks/useAuth";
+import Table from "./Table";
 
-function Plan() {
+interface Props {
+  products: Product[];
+}
+
+function Plan({ products }: Props) {
   const { logout } = useAuth();
 
   return (
@@ -31,7 +37,7 @@ function Plan() {
         </button>
       </header>
 
-      <main className="pt-28 max-w-5xl px-5 pb-12 transition-all md:px-10">
+      <main className="max-w-5xl px-5 pt-28 pb-12 transition-all md:px-10">
         <h1 className="mb-3 text-3xl font-medium">
           Choose the plan that's right for you
         </h1>
@@ -51,10 +57,14 @@ function Plan() {
 
         <div className="mt-4 flex flex-col space-y-4">
           <div className="flex w-full items-center justify-center self-end md:w-3/5">
-            <div className="planOption">Standard</div>
-            <div className="planOption">Standard</div>
-            <div className="planOption">Standard</div>
+            {products.map((product) => (
+              <div key={product.id} className="planOption">
+                {product.name}
+              </div>
+            ))}
           </div>
+
+          <Table products={products}/>
 
           <button>Subscribe</button>
         </div>
