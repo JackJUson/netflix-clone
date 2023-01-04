@@ -46,7 +46,7 @@
   }
 
   .tableRow {
-    @apply flex flex-wrap items-center font-medium;
+    @apply flex flex-wrap items-center font-medium md:pb-1 md:pt-1;
   }
 
   .tableDataTitle {
