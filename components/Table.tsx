@@ -10,6 +10,9 @@ function Table({ products }: Props) {
       <tbody>
         <tr>
           <td>Monthly price</td>
+          {products.map(product => (
+            <td key={product.id}>A${product.prices[0].unit_amount! / 100}</td>
+          ))}
         </tr>
       </tbody>
     </table>
