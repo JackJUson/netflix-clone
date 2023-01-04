@@ -5,15 +5,23 @@ import Link from "next/link";
 import useAuth from "../hooks/useAuth";
 import Table from "./Table";
 import { useState } from "react";
+import { loadCheckout } from "../library/stripe";
 
 interface Props {
   products: Product[];
 }
 
 function Plan({ products }: Props) {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const [selectedPlan, setSelectedPlan] = useState<Product | null>(products[2]);
+  const [billingLoading, setBillLoading] = useState(false);
 
+  const subscribeToPlan = () => {
+    if (!user) return
+    
+    loadCheckout(selectedPlan?.prices[0].id);
+    setBillLoading(true);
+  }
   return (
     <div>
       <Head>
@@ -39,8 +47,8 @@ function Plan({ products }: Props) {
         </button>
       </header>
 
-      <main className="max-w-5xl px-5 pt-28 pb-12 transition-all md:px-10">
-        <h1 className="mb-3 text-3xl font-medium">
+      <main className="mx-auto max-w-5xl px-5 pt-28 pb-12 transition-all md:px-10">
+        <h1 className="mb-4 text-3xl font-medium">
           Choose the plan that's right for you
         </h1>
         <ul>
@@ -57,7 +65,7 @@ function Plan({ products }: Props) {
           </li>
         </ul>
 
-        <div className="mt-4 flex flex-col space-y-4">
+        <div className="mt-8 flex flex-col space-y-4">
           <div className="flex w-full items-center justify-center self-end md:w-3/5">
             {products.map((product) => (
               <div
@@ -73,6 +81,8 @@ function Plan({ products }: Props) {
           </div>
 
           <Table products={products} selectedPlan={selectedPlan}/>
+
+          <button></button>
 
           <button>Subscribe</button>
         </div>
