@@ -4,6 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import useAuth from "../hooks/useAuth";
 import Table from "./Table";
+import { useState } from "react";
 
 interface Props {
   products: Product[];
@@ -11,6 +12,7 @@ interface Props {
 
 function Plan({ products }: Props) {
   const { logout } = useAuth();
+  const [selectedPlan, setSelectedPlan] = useState<Product | null>(products[2]);
 
   return (
     <div>
@@ -58,13 +60,19 @@ function Plan({ products }: Props) {
         <div className="mt-4 flex flex-col space-y-4">
           <div className="flex w-full items-center justify-center self-end md:w-3/5">
             {products.map((product) => (
-              <div key={product.id} className="planOption">
+              <div
+                key={product.id}
+                className={`planOption ${
+                  selectedPlan?.id === product.id ? "opacity-100" : "opacity-60"
+                }`}
+                onClick={() => setSelectedPlan(product)}
+              >
                 {product.name}
               </div>
             ))}
           </div>
 
-          <Table products={products}/>
+          <Table products={products} selectedPlan={selectedPlan}/>
 
           <button>Subscribe</button>
         </div>
