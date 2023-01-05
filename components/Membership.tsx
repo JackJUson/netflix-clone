@@ -2,6 +2,7 @@ import useAuth from "../hooks/useAuth";
 import useSubscription from "../hooks/useSubscription";
 import { useState } from "react";
 import Loader from "./Loader";
+import { billingPortal } from "../library/stripe";
 
 function Membership() {
   const { user } = useAuth();
@@ -11,6 +12,7 @@ function Membership() {
   const manageSubscription = () => {
     if (subscription) {
       setBillingLoading(true);
+      billingPortal();
     }
   };
 
@@ -33,6 +35,10 @@ function Membership() {
             "Cancel Membership"
           )}
         </button>
+      </div>
+
+      <div>
+        
       </div>
     </div>
   );
