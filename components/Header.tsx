@@ -1,13 +1,11 @@
 import { BellIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import useAuth from "../hooks/useAuth";
-import Account from "../pages/account";
+import BasicMenu from "./BasicMenu";
+
 
 function Header() {
   const [pageScroll, setPageScroll] = useState(false);
-  const { logout } = useAuth();
-
   useEffect(() => {
     const handleScroll = () => {
       window.scrollY > 0 ? setPageScroll(true) : setPageScroll(false);
@@ -29,6 +27,8 @@ function Header() {
           height={100}
           className="cursor-pointer object-contain"
         />
+
+        <BasicMenu />
 
         <ul className="hidden space-x-8 md:flex">
           <li className="headerLink">Home</li>
