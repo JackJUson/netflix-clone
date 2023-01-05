@@ -1,9 +1,17 @@
+import { getProducts, Product } from "@stripe/firestore-stripe-payments";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import Membership from "../components/Membership";
 import useAuth from "../hooks/useAuth";
 import useSubscription from "../hooks/useSubscription";
+import payments from "../library/stripe";
 
-function Account() {
+interface Props {
+  products: Product[];
+}
+
+function Account({ products }: Props) {
   const { user } = useAuth();
   const subscription = useSubscription(user);
 
@@ -37,12 +45,37 @@ function Account() {
           <h1 className="text-3xl md:text-4xl">Account</h1>
           <div className="-ml-0.5 flex items-center gap-x-1.5">
             <img src="https://rb.gy/4vfk4r" alt="" className="h-7 w-7" />
-            <p className="text-xs font-semibold text-[#555]">Member since {subscription?.created}</p>
+            <p className="text-xs font-semibold text-[#555]">
+              Member since {subscription?.created}
+            </p>
           </div>
         </div>
 
+        <Membership />
+
+        <div>
+          <h4>Plan Details</h4>
+          <div>
+
+          </div>
+        </div>
       </main>
     </div>
   );
 }
 export default Account;
+
+export const getStaticProps: GetStaticProps = async () => {
+  const products = await getProducts(payments, {
+    includePrices: true,
+    activeOnly: true,
+  })
+    .then((res) => res)
+    .catch((error) => console.log(error.message))
+
+  return {
+    props: {
+      products,
+    },
+  }
+}
