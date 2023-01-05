@@ -10,7 +10,7 @@ function useList(uid: string | undefined) {
     if (!uid) return;
 
     return onSnapshot(
-      collection(db, "customers", uid, "myList"),
+      collection(db, 'customers', uid, "myList"),
       (snapshot) => {
         setList(
           snapshot.docs.map((doc) => ({

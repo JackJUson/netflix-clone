@@ -2,6 +2,7 @@ import MuiModal from "@mui/material/Modal";
 import { modalState, movieState } from "../atoms/modalAtom";
 import { useRecoilState } from "recoil";
 import {
+  CheckIcon,
   HandThumbUpIcon,
   PlusIcon,
   XMarkIcon,
@@ -10,6 +11,10 @@ import { useEffect, useState } from "react";
 import { Element, Genre } from "../typings";
 import ReactPlayer from "react-player/lazy";
 import { FaPlay, FaVolumeOff, FaVolumeUp } from "react-icons/fa";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import useAuth from "../hooks/useAuth";
+import toast, { Toaster } from "react-hot-toast";
 
 function Modal() {
   const [showModal, setShowModal] = useRecoilState(modalState);
@@ -17,10 +22,8 @@ function Modal() {
   const [trailer, setTrailer] = useState("");
   const [genres, setGenres] = useState<Genre[]>([]);
   const [muted, setMuted] = useState(false);
-
-  const handleClose = () => {
-    setShowModal(false);
-  };
+  const [addList, setAddList] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!movie) return;
@@ -48,6 +51,37 @@ function Modal() {
     fetchMovie();
   }, [movie]);
 
+  const handleList = async () => {
+    if (addList) {
+      await deleteDoc(
+        doc(db, "customers", user!.uid, "myList", movie?.id.toString()!)
+      );
+
+      toast(
+        `${movie?.title || movie?.original_name} has been removed from My List`,
+        {
+          duration: 8000,
+        }
+      );
+    } else {
+      await setDoc(
+        doc(db, "customers", user!.uid, "myList", movie?.id.toString()!),
+        { ...movie }
+      );
+
+      toast(
+        `${movie?.title || movie?.original_name} has been added from My List`,
+        {
+          duration: 8000,
+        }
+      );
+    }
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
   return (
     <MuiModal
       className="fixed !top-7 left-0 right-0 z-50 mx-auto w-full max-w-5xl overflow-hidden
@@ -56,6 +90,7 @@ function Modal() {
       onClose={handleClose}
     >
       <>
+        <Toaster position="bottom-center" />
         <button
           onClick={handleClose}
           className="modalButton absolute right-5 top-5 !z-40 h-9 w-9 
@@ -87,8 +122,12 @@ function Modal() {
                 Play
               </button>
 
-              <button className="modalButton">
-                <PlusIcon className="h-7 w-7" />
+              <button className="modalButton" onClick={handleList}>
+                {addList ? (
+                  <CheckIcon className="h-7 w-7" />
+                ) : (
+                  <PlusIcon className="h-7 w-7" />
+                )}
               </button>
 
               <button className="modalButton">
@@ -127,7 +166,7 @@ function Modal() {
               <div className="flex flex-col space-y-3 text-sm">
                 <div>
                   <span className="text-[gray]">Genres: </span>
-                  {genres.map((genre) => genre.name).join(', ')}
+                  {genres.map((genre) => genre.name).join(", ")}
                 </div>
 
                 <div>
