@@ -75,7 +75,7 @@ function Account({ products }: Props) {
         >
           <h4 className="text-lg text-[gray]">Settings</h4>
           <p
-            className="col-span-3 cursor-pointer text-blue-500 hover:underline"
+            className="col-span-3 cursor-pointer text-blue-500 hover:underline md:text-right"
             onClick={logout}
           >
             Sign out of all devices

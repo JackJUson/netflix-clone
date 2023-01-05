@@ -48,6 +48,23 @@ function Membership() {
             <p className="membershipLink">Change password</p>
           </div>
         </div>
+
+        <div className="flex flex-col justify-between pt-4 pb-4 md:flex-row md:pb-0">
+          <div>
+            <p>
+              {subscription?.cancel_at_period_end
+                ? "Your membership will end on "
+                : "Your next billing date is "}
+              {subscription?.current_period_end}
+            </p>
+          </div>
+          <div className="md:text-right">
+            <p className="membershipLink">Manage payment info</p>
+            <p className="membershipLink">Add backup payment method</p>
+            <p className="membershipLink">Billing Details</p>
+            <p className="membershipLink">Change billing day</p>
+          </div>
+        </div>
       </div>
     </div>
   );
