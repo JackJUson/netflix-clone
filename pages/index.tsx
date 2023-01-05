@@ -8,6 +8,7 @@ import Modal from "../components/Modal";
 import Plan from "../components/Plan";
 import Row from "../components/Row";
 import useAuth from "../hooks/useAuth";
+import useSubscription from "../hooks/useSubscription";
 import payments from "../library/stripe";
 import { Movie } from "../typings";
 import requests from "../utils/request";
@@ -21,7 +22,7 @@ interface Props {
   horrorMovies: Movie[];
   romanceMovies: Movie[];
   documentaries: Movie[];
-  products: Product;
+  products: Product[];
 }
 
 const Home = ({
@@ -33,11 +34,11 @@ const Home = ({
   horrorMovies,
   romanceMovies,
   documentaries,
-  products
+  products,
 }: Props) => {
-  const { loading, logout } = useAuth();
+  const { loading, logout, user } = useAuth();
   const showModal = useRecoilValue(modalState);
-  const subscription = false;
+  const subscription = useSubscription(user);
 
   if (loading || subscription === null) return null;
 
