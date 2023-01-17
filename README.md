@@ -97,7 +97,8 @@ This software uses the following open source packages:
 ![287461016-2](https://user-images.githubusercontent.com/108652931/212794637-95803d37-3bfa-4c32-9587-a996a05d25f1.PNG)
 
 ### Stripe Payment
-- Use a dummmy card to finish subscription
+- Add a random address
+- Use a dummy card to finish subscription
   
 ![287461007-3](https://user-images.githubusercontent.com/108652931/212794717-33d508c6-25c1-4758-bd02-4e69f920faba.PNG)
 
