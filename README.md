@@ -98,6 +98,7 @@ This software uses the following open source packages:
 
 ### Stripe Payment
 - Use a dummmy card to finish subscription
+  
 ![287461007-3](https://user-images.githubusercontent.com/108652931/212794717-33d508c6-25c1-4758-bd02-4e69f920faba.PNG)
 
 ### Home page to start browsing
